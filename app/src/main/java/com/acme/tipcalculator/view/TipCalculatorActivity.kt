@@ -1,5 +1,6 @@
 package com.acme.tipcalculator.view
 
+import android.arch.lifecycle.ViewModelProviders
 import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.Snackbar
@@ -48,8 +49,7 @@ class TipCalculatorActivity : AppCompatActivity(),
          * TODO Lab 4: Uncomment this line to assign a calculatorViewModel using the AC ViewModelProviders
          *        factory method and use it in the next line instead of constructing a new CalculatorViewModel() each time.
          */
-        // calculatorViewModel = ViewModelProviders.of(this).get(CalculatorViewModel::class.java)
-        calculatorViewModel = CalculatorViewModel()
+        calculatorViewModel = ViewModelProviders.of(this).get(CalculatorViewModel::class.java)
 
         binding = DataBindingUtil.setContentView<ActivityTipCalculatorBinding>(this, R.layout.activity_tip_calculator)
 
