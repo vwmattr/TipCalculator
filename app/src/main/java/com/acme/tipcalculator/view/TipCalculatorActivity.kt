@@ -1,5 +1,6 @@
 package com.acme.tipcalculator.view
 
+import android.databinding.DataBindingUtil
 import android.os.Bundle
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
@@ -11,6 +12,7 @@ import android.view.View
 import android.widget.EditText
 import android.widget.TextView
 import com.acme.tipcalculator.R
+import com.acme.tipcalculator.databinding.ActivityTipCalculatorBinding
 import com.acme.tipcalculator.model.TipCalculation
 import com.acme.tipcalculator.viewmodel.CalculatorViewModel
 
@@ -19,11 +21,11 @@ class TipCalculatorActivity : AppCompatActivity(),
         SaveDialogFragment.Callback {
 
     /**
-     *  TODO Lab 1: After turning on databinding in your gradle file, and wrapping the layouts
+     *  Lab Step 1: After turning on databinding in your gradle file, and wrapping the layouts
      *  inside of `activity_tip_calculator.xml` in layout tags.  Uncomment the following
      *  lateinit var called binding of the generated binding type from `activity_tip_calculator.xml`
      **/
-    // lateinit var binding: ActivityTipCalculatorBinding
+     lateinit var binding: ActivityTipCalculatorBinding
 
     private lateinit var calculatorViewModel: CalculatorViewModel
 
@@ -53,12 +55,12 @@ class TipCalculatorActivity : AppCompatActivity(),
         calculatorViewModel = CalculatorViewModel()
 
         /**
-         * TODO Lab 1: Use the static DataBindingUtil.setContentView function to set the content view
+         * Lab Step 1: Use the static DataBindingUtil.setContentView function to set the content view
          * and generate the binding for this view in one step.
          *
          * Use this to set the lateinit binding var that you defined at the class level.
          */
-         setContentView(R.layout.activity_tip_calculator)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_tip_calculator)
 
         setSupportActionBar(getToolbar())
 
@@ -98,40 +100,40 @@ class TipCalculatorActivity : AppCompatActivity(),
     }
 
     /**
-     * TODO Lab 1: Get views from the binding instead of using findViewById.
+     * Lab Step 1: Get views from the binding instead of using findViewById.
      */
     private fun getInputTipPercentageValue() : String {
-        return (findViewById<EditText>(R.id.input_tip_percentage)).text.toString()
+        return binding.content?.inputTipPercentage?.text.toString()
     }
 
     private fun getInputCheckoutAmountValue() : String {
-        return (findViewById<EditText>(R.id.input_check_amount)).text.toString()
+        return binding.content?.inputCheckAmount?.text.toString()
     }
 
     private fun getFloatingActionButton() : FloatingActionButton {
-        return findViewById<FloatingActionButton>(R.id.calculate_fab)
+        return binding.calculateFab
     }
 
     private fun getRootView(): View {
-        return window.decorView.findViewById<View>(android.R.id.content)
+        return binding.root
     }
 
     private fun TipCalculatorActivity.getToolbar(): Toolbar {
-        return findViewById<Toolbar>(R.id.toolbar)
+        return binding.toolbar
     }
 
     private fun updateView(inputsToo: Boolean = false) {
 
         if(inputsToo) {
-            (findViewById<TextView>(R.id.input_check_amount)).text = calculatorViewModel.checkAmtInput
-            (findViewById<TextView>(R.id.input_tip_percentage)).text = calculatorViewModel.tipPctInput
+            binding.content?.inputCheckAmount?.setText(calculatorViewModel.checkAmtInput)
+            binding.content?.inputTipPercentage?.setText(calculatorViewModel.tipPctInput)
         }
 
         calculatorViewModel.tipCalculation.let { tc ->
-            (findViewById<TextView>(R.id.bill_amount)).text = getString(R.string.dollar_amount, tc.checkAmount)
-            (findViewById<TextView>(R.id.tip_dollar_amount)).text = getString(R.string.dollar_amount, tc.tipAmount)
-            (findViewById<TextView>(R.id.total_dollar_amount)).text = getString(R.string.dollar_amount, tc.grandTotal)
-            (findViewById<TextView>(R.id.calculation_name)).text = tc.locationName
+            binding.content?.billAmount?.setText(getString(R.string.dollar_amount, tc.checkAmount))
+            binding.content?.tipDollarAmount?.setText(getString(R.string.dollar_amount, tc.tipAmount))
+            binding.content?.totalDollarAmount?.setText(getString(R.string.dollar_amount, tc.grandTotal))
+            binding.content?.calculationName?.setText(tc.locationName)
         }
 
     }
