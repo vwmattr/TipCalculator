@@ -24,7 +24,8 @@ import com.acme.tipcalculator.model.TipCalculation
  * Bonus Questions:
  *
  */
-class CalculatorViewModel constructor(private val calculator: Calculator = Calculator()) : BaseObservable() {
+class CalculatorViewModel constructor(private val calculator: Calculator = Calculator())
+    : BaseViewModel() {
 
     var checkAmtInput = ""
     var tipPctInput = ""
