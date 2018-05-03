@@ -49,29 +49,9 @@ class TipCalculatorActivity : AppCompatActivity(),
 
         binding = DataBindingUtil.setContentView<ActivityTipCalculatorBinding>(this, R.layout.activity_tip_calculator)
 
-        /**
-         * TODO Lab 2: Uncomment this line to assign `calculatorViewModel` to the view's `vm` variable.
-         */
-        // binding.vm = calculatorViewModel
+        binding.vm = calculatorViewModel
 
         setSupportActionBar(getToolbar())
-
-        /**
-         * TODO Lab 2: Remove this entire FloatingActionButton listener block.  We're going to let Data Binding do the work
-         *        of binding viewModel actions to the view and react to viewModel updates.
-         *
-         */
-        getFloatingActionButton().setOnClickListener { _ ->
-
-            calculatorViewModel.checkAmtInput = getInputCheckoutAmountValue()
-            calculatorViewModel.tipPctInput = getInputTipPercentageValue()
-
-            // Invoke Calculate Tip on the ViewModel
-            calculatorViewModel.calculateTip()
-
-            // After the calculation, we need to manually update our view elements
-            updateView()
-        }
     }
 
     fun showSaveDialog() {
@@ -86,20 +66,11 @@ class TipCalculatorActivity : AppCompatActivity(),
 
     override fun onTipSelected(tipCalc: TipCalculation) {
         calculatorViewModel.loadTipCalculation(tipCalc)
-        /**
-         * TODO Lab 2: Remove this, we don't have to manually update our view with databinding
-         */
-        updateView(true)
         Snackbar.make(getRootView(), "Loaded ${tipCalc.locationName}", Snackbar.LENGTH_SHORT).show()
     }
 
     override fun onSaveTip(name: String) {
-
         calculatorViewModel.saveCurrentTip(name)
-        /**
-         * TODO Lab 2: Remove this, we don't have to manually update our view with databinding
-         */
-        updateView()
         Snackbar.make(getRootView(), "Saved $name", Snackbar.LENGTH_SHORT).show()
     }
 
@@ -109,35 +80,6 @@ class TipCalculatorActivity : AppCompatActivity(),
 
     private fun TipCalculatorActivity.getToolbar(): Toolbar {
         return binding.toolbar
-    }
-
-    /** TODO Lab 2: Remove lookup functions and updateView functions no longer needed. */
-    private fun getInputTipPercentageValue() : String {
-        return binding.content?.inputTipPercentage?.text.toString()
-    }
-
-    private fun getInputCheckoutAmountValue() : String {
-        return binding.content?.inputCheckAmount?.text.toString()
-    }
-
-    private fun getFloatingActionButton() : FloatingActionButton {
-        return binding.calculateFab
-    }
-
-    private fun updateView(inputsToo: Boolean = false) {
-
-        if(inputsToo) {
-            binding.content?.inputCheckAmount?.setText(calculatorViewModel.checkAmtInput)
-            binding.content?.inputTipPercentage?.setText(calculatorViewModel.tipPctInput)
-        }
-
-        calculatorViewModel.tipCalculation.let { tc ->
-            binding.content?.billAmount?.setText(getString(R.string.dollar_amount, tc.checkAmount))
-            binding.content?.tipDollarAmount?.setText(getString(R.string.dollar_amount, tc.tipAmount))
-            binding.content?.totalDollarAmount?.setText(getString(R.string.dollar_amount, tc.grandTotal))
-            binding.content?.calculationName?.setText(tc.locationName)
-        }
-
     }
 
 }

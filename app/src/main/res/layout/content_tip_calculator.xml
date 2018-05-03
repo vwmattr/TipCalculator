@@ -3,14 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-        TODO Lab 2: Add a variable called `vm` of type `com.acme.tipcalculator.viewmodel.CalculatorViewModel`
-
-        Bonus Questions:
-        * - What method gets generate on the binding object in response to adding this variable?
-    -->
     <data>
-
+        <variable name="vm"
+            type="com.acme.tipcalculator.viewmodel.CalculatorViewModel" />
     </data>
 
     <android.support.constraint.ConstraintLayout
@@ -30,9 +25,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <!-- TODO Lab 2: Use a binding expression to set the `android:text` to the
-                        viewModel property checkAmtInput
-                        Make this a 2-way bound property. -->
             <EditText
                 android:id="@+id/input_check_amount"
                 android:layout_width="match_parent"
@@ -42,7 +34,7 @@
                 android:imeOptions="actionNext"
                 android:maxLines="1"
                 android:selectAllOnFocus="true"
-                android:text="" />
+                android:text="@={vm.checkAmtInput}" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -55,9 +47,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/input_layout_check_amount">
 
-            <!-- TODO Lab 2: Use a binding expression to set the `android:text` to the
-                        viewModel property tipPctInput
-                        Make this a 2-way bound property. -->
             <EditText
                 android:id="@+id/input_tip_percentage"
                 android:layout_width="match_parent"
@@ -67,7 +56,7 @@
                 android:maxLines="1"
                 android:selectAllOnFocus="true"
                 android:imeOptions="actionDone"
-                android:text="" />
+                android:text="@={vm.tipPctInput}" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -90,16 +79,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- TODO Lab 2: Use a binding expression to set the `android:text` for this TextView.
-                            Use a formatted string based on the template R.string.dollar_amount,
-                            Get the value from the viewModel's tipCalculation.checkAmount property.
-
-                      Hint: Remember you can access formatted strings with a data binding expression
-                            @string/<stringResId>(<inputValues>)
-                            Where <stringResId> => Id of Strings resource.
-                                  <inputValues> => 0..* different arguments required by the string template
-                                                   defined in the stringRestId.
-                             -->
                 <TextView
                     android:id="@+id/bill_amount"
                     style="@style/Base.TextAppearance.AppCompat.Large"
@@ -107,7 +86,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     tools:text="$20.00"
-                    android:text="$0.00"
+                    android:text="@{@string/dollar_amount(vm.tipCalculation.checkAmount)}"
                     />
 
                 <TextView
@@ -127,9 +106,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- TODO Lab 2: Use a binding expression to set the `android:text` for this TextView.
-                            Use a formatted string based on the template R.string.dollar_amount,
-                            Get the value from the viewModel's tipCalculation.tipAmount property. -->
                 <TextView
                     android:id="@+id/tip_dollar_amount"
                     style="@style/Base.TextAppearance.AppCompat.Large"
@@ -137,7 +113,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     tools:text="$11.50"
-                    android:text="$0.00" />
+                    android:text="@{@string/dollar_amount(vm.tipCalculation.tipAmount)}" />
 
                 <TextView
                     android:id="@+id/tip_dollar_amount_label"
@@ -157,9 +133,6 @@
                 android:layout_weight="1"
                 android:orientation="vertical">
 
-                <!-- TODO Lab 2: Use a binding expression to set the `android:text` for this TextView.
-                            Use a formatted string based on the template R.string.dollar_amount,
-                            Get the value from the viewModel's tipCalculation.grandTotal property. -->
                 <TextView
                     android:id="@+id/total_dollar_amount"
                     style="@style/Base.TextAppearance.AppCompat.Large"
@@ -167,7 +140,7 @@
                     android:layout_height="wrap_content"
                     android:textAlignment="center"
                     tools:text="$31.50"
-                    android:text="$0.00" />
+                    android:text="@{@string/dollar_amount(vm.tipCalculation.grandTotal)}" />
 
                 <TextView
                     android:id="@+id/total_dollar_amount_label"
@@ -181,8 +154,6 @@
 
         </LinearLayout>
 
-        <!-- TODO Lab 2: Use a binding expression to set the `android:text` for this TextView.
-                    Get the value from the viewModel's tipCalculation.locationName property. -->
         <TextView
             android:id="@+id/calculation_name"
             style="@style/Base.TextAppearance.AppCompat.Headline"
@@ -195,7 +166,7 @@
             app:layout_constraintTop_toBottomOf="@id/calculation_outputs"
             android:textAlignment="center"
             tools:text="Veggie Palace"
-            android:text="" />
+            android:text="@{vm.tipCalculation.locationName}" />
 
 
     </android.support.constraint.ConstraintLayout>

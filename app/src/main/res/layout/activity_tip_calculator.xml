@@ -3,13 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!--
-       TODO Lab 2: Add a variable called `vm` of type `com.acme.tipcalculator.viewmodel.CalculatorViewModel`
-
-       Bonus Questions:
-       * - What method gets generate on the binding object in response to adding this variable?
-     -->
     <data>
+        <variable name="vm"
+            type="com.acme.tipcalculator.viewmodel.CalculatorViewModel" />
 
     </data>
 
@@ -32,20 +28,19 @@
 
         </android.support.design.widget.AppBarLayout>
 
-        <!-- TODO Lab 2: Pass `vm` to content_tip_calculator. -->
         <include
             android:id="@+id/content"
+            app:vm="@{vm}"
             layout="@layout/content_tip_calculator" />
 
 
-        <!-- TODO Lab 2: Use a lambda expression to invoke vm.calculateTip()
-                    [with no arguments] directly from this FAB definition onClick  -->
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/calculate_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom|end"
             android:layout_margin="@dimen/fab_margin"
+            android:onClick="@{() -> vm.calculateTip()}"
             android:src="@drawable/ic_money_white_24dp" />
 
     </android.support.design.widget.CoordinatorLayout>
