@@ -38,7 +38,7 @@ class LoadDialogFragment : DialogFragment() {
     }
 
     /** TODO Lab 4: Remove calculator repository and replace with a nullable CalculatorViewModel member variable */
-    private var calculatorRepository = InMemoryTipCalculationRepository
+    private var calculatorViewModel: CalculatorViewModel? = null
 
     private var itemSelectedCallback: Callback? = null
 
@@ -50,7 +50,7 @@ class LoadDialogFragment : DialogFragment() {
              * TODO Lab 4: Uncomment this line to assign a calculatorViewModel when we attach to the
              *        hosting activity.
              */
-            // calculatorViewModel = ViewModelProviders.of(context).get(CalculatorViewModel::class.java)
+             calculatorViewModel = ViewModelProviders.of(context).get(CalculatorViewModel::class.java)
 
         }
     }
@@ -59,7 +59,7 @@ class LoadDialogFragment : DialogFragment() {
         super.onDetach()
         itemSelectedCallback = null
         /** TODO Lab 4: Uncomment this line to nullify the calculatorViewModel onDetach() */
-        // calculatorViewModel = null
+         calculatorViewModel = null
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
@@ -96,7 +96,7 @@ class LoadDialogFragment : DialogFragment() {
          * TODO Lab 4: Use the `calculatorViewModel.loadSavedTipCalculations() function
          * to load savedTipCalculations instead of referencing the repository directly.
          */
-        calculatorRepository.loadSavedTipCalculations()?.observe(this, Observer { tips ->
+        calculatorViewModel?.loadSavedTipCalculations()?.observe(this, Observer { tips ->
             if(tips != null) {
                 tcListAdapter.updateList(tips)
             }
