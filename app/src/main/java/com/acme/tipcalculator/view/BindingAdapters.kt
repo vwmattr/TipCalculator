@@ -2,7 +2,9 @@ package com.acme.tipcalculator.view
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.databinding.BindingAdapter
 import android.view.View
+import android.widget.TextView
 
 /**
  * TODO Lab 3: Adapters and Converters
@@ -25,10 +27,8 @@ import android.view.View
  * - What would it take to apply this to all Views?
  * - What happens if you change the order of the arguments?
  */
-//@BindingAdapter(value = ["app:text", "app:animate"])
-fun magicTextWithFade(/* Hint, this method needs 3 arguments.  Remember Order is important! */) {
-
-    /*
+@BindingAdapter(value = ["app:text", "app:animate"])
+fun magicTextWithFade(tv: TextView, text: String?, animate: Boolean) {
     if (text.isNullOrEmpty()) {
         hideView(tv, animate) {
             tv.text = ""
@@ -37,7 +37,6 @@ fun magicTextWithFade(/* Hint, this method needs 3 arguments.  Remember Order is
         tv.text = text
         showView(tv, animate)
     }
-    */
 }
 
 private fun showView(v: View, animate: Boolean, then: () -> Unit = {}) {
